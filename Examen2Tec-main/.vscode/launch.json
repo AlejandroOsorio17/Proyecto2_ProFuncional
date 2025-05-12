@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "LectorCSV",
+      "request": "launch",
+      "mainClass": "LectorCSV",
+      "projectName": "Examen2Tec-main_1b80e606"
+    },
+    {
+      "type": "java",
+      "name": "Ejecutar LectorCSV",
+      "request": "launch",
+      "mainClass": "LectorCSV",
+      "projectName": "Examen2Tec-main",
+      "cwd": "${workspaceFolder}",
+      "classPaths": [
+        "bin",
+        "lib/jfreechart-1.5.4.jar",
+        "lib/jcommon-1.0.24.jar"
+      ]
+    }
+  ]
+}
