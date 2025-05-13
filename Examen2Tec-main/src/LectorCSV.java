@@ -59,9 +59,12 @@ public class LectorCSV {
                         Collectors.averagingDouble(RegistroTemperatura::getTemperatura)
                 ));
 
-        System.out.println("\nPromedio de temperaturas por ciudad:");
-        promedios.forEach((ciudad, promedio) -> 
-            System.out.printf("%s: %.2f°C%n", ciudad, promedio));
+        System.out.println("\nPromedio de temperaturas por ciudad (ordenado alfabéticamente):");
+
+        promedios.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey()) 
+                .forEach(entry ->
+                        System.out.printf("%s: %.2f°C%n", entry.getKey(), entry.getValue()));
 
         mostrarGraficaPromedios(promedios);
     }
@@ -69,9 +72,10 @@ public class LectorCSV {
     public static void mostrarGraficaPromedios(Map<String, Double> promedios) {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-        promedios.forEach((ciudad, promedio) -> {
-            dataset.addValue(promedio, "Temperatura", ciudad);
-        });
+        promedios.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey()) 
+                .forEach(entry ->
+                        dataset.addValue(entry.getValue(), "Temperatura", entry.getKey()));
 
         JFreeChart grafico = ChartFactory.createBarChart(
                 "Promedio de Temperatura por Ciudad",
@@ -98,10 +102,16 @@ public class LectorCSV {
             return;
         }
 
-        RegistroTemperatura max = filtrados.stream()
-                .max(Comparator.comparing(RegistroTemperatura::getTemperatura)).orElse(null);
-        RegistroTemperatura min = filtrados.stream()
-                .min(Comparator.comparing(RegistroTemperatura::getTemperatura)).orElse(null);
+        List<RegistroTemperatura> ordenados = filtrados.stream()
+                .sorted(Comparator.comparing(RegistroTemperatura::getTemperatura))
+                .collect(Collectors.toList());
+
+        RegistroTemperatura min = ordenados.get(0);
+        RegistroTemperatura max = ordenados.get(ordenados.size() - 1);
+
+        System.out.println("\nCiudades con datos para " + fecha + " (ordenadas por temperatura):");
+        ordenados.forEach(r ->
+                System.out.printf("%s: %.2f°C%n", r.getCiudad(), r.getTemperatura()));
 
         System.out.println("\nTemperatura extrema para " + fecha + ":");
         System.out.printf("Ciudad más calurosa: %s (%.2f°C)%n", max.getCiudad(), max.getTemperatura());

@@ -6,6 +6,20 @@
       "name": "LectorCSV",
       "request": "launch",
       "mainClass": "LectorCSV",
+      "projectName": "Examen2Tec-main_c0e98076"
+    },
+    {
+      "type": "java",
+      "name": "LectorCSV",
+      "request": "launch",
+      "mainClass": "LectorCSV",
+      "projectName": "Examen2Tec-main-correg_add152f5"
+    },
+    {
+      "type": "java",
+      "name": "LectorCSV",
+      "request": "launch",
+      "mainClass": "LectorCSV",
       "projectName": "Examen2Tec-main_1b80e606"
     },
     {
